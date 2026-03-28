@@ -6,8 +6,11 @@ services:
     ports:
       - 3001:3000
     volumes:
-      - ./db:/app/db
+      - counter_db:/app/db
     environment:
       PORT: 3000
       DATABASE_PATH: /app/db/counter.db
     restart: unless-stopped
+
+volumes:
+  counter_db:

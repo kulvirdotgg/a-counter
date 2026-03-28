@@ -1,7 +1,14 @@
 import { Database } from "bun:sqlite";
-import { readFileSync } from "fs";
+import { existsSync, mkdirSync } from "fs";
+import { dirname, join, normalize } from "path";
 
-const db = new Database("counter.db");
+const port = Number(Bun.env.PORT ?? "3000");
+const databasePath = Bun.env.DATABASE_PATH ?? "data/counter.db";
+const publicDir = join(import.meta.dir, "public");
+
+mkdirSync(dirname(databasePath), { recursive: true });
+
+const db = new Database(databasePath);
 
 db.run(`
   CREATE TABLE IF NOT EXISTS mentions (
@@ -47,9 +54,21 @@ function resetMentions() {
   return getCounts();
 }
 
+function getStaticFile(pathname: string) {
+  const requestedPath = pathname === "/" ? "index.html" : pathname.slice(1);
+  const normalizedPath = normalize(requestedPath).replace(/^(\.\.(\/|\\|$))+/, "");
+  const filePath = join(publicDir, normalizedPath);
+
+  if (!filePath.startsWith(publicDir) || !existsSync(filePath)) {
+    return null;
+  }
+
+  return Bun.file(filePath);
+}
+
 // Serve the app
 const server = Bun.serve({
-  port: 3000,
+  port,
   async fetch(req) {
     const url = new URL(req.url);
 
@@ -71,11 +90,10 @@ const server = Bun.serve({
       return Response.json(counts);
     }
 
-    if (url.pathname === "/" || url.pathname === "/index.html") {
-      const html = readFileSync("public/index.html", "utf-8");
-      return new Response(html, {
-        headers: { "Content-Type": "text/html" },
-      });
+    const staticFile = getStaticFile(url.pathname);
+
+    if (staticFile) {
+      return new Response(staticFile);
     }
 
     return new Response("Not Found", { status: 404 });

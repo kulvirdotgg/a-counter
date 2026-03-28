@@ -1,169 +1,198 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mention Counter</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            background: '#1a1a1a',
-            card: '#242424',
-            border: '#333333',
-            orange: {
-              500: '#f97316',
-              600: '#ea580c',
-              400: '#fb923c',
-            }
-          }
-        }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mention Counter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              background: "#1a1a1a",
+              card: "#242424",
+              border: "#333333",
+              orange: {
+                500: "#f97316",
+                600: "#ea580c",
+                400: "#fb923c",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background-color: #1a1a1a;
       }
-    }
-  </script>
-  <style>
-    body {
-      background-color: #1a1a1a;
-    }
-  </style>
-</head>
-<body class="min-h-screen bg-background text-white">
-  <div class="min-h-screen flex flex-col items-center justify-center p-6">
-    <div class="w-full max-w-2xl">
-      <!-- Header -->
-      <div class="text-center mb-10">
-        <h1 class="text-3xl font-bold text-white mb-2">Mention Counter</h1>
-        <p class="text-gray-400">Track who you mention more</p>
-      </div>
+    </style>
+  </head>
+  <body class="min-h-screen bg-background text-white">
+    <div class="min-h-screen flex flex-col items-center justify-center p-6">
+      <div class="w-full max-w-2xl">
+        <!-- Header -->
+        <div class="text-center mb-10">
+          <h1 class="text-3xl font-bold text-white mb-2">Mention Counter</h1>
+          <p class="text-gray-400">Track who you mention more</p>
+        </div>
 
-      <!-- Timeframe Filter -->
-      <div class="flex justify-center gap-2 mb-8">
-        <button onclick="setTimeframe(null)" data-timeframe="all" class="timeframe-btn px-4 py-2 rounded-lg text-sm font-medium bg-orange-500 text-black">
-          All Time
-        </button>
-        <button onclick="setTimeframe(60)" data-timeframe="60" class="timeframe-btn px-4 py-2 rounded-lg text-sm font-medium bg-card text-gray-300 border border-border hover:border-orange-500/50">
-          Last Hour
-        </button>
-        <button onclick="setTimeframe(1440)" data-timeframe="1440" class="timeframe-btn px-4 py-2 rounded-lg text-sm font-medium bg-card text-gray-300 border border-border hover:border-orange-500/50">
-          24 Hours
-        </button>
-        <button onclick="setTimeframe(10080)" data-timeframe="10080" class="timeframe-btn px-4 py-2 rounded-lg text-sm font-medium bg-card text-gray-300 border border-border hover:border-orange-500/50">
-          7 Days
-        </button>
-      </div>
-
-      <!-- Counter Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <!-- Mumbai Indians Card -->
-        <div class="bg-card border border-border rounded-xl p-6">
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-semibold text-white">Mumbai Indians</h2>
-            <span id="mi-percentage" class="text-sm text-gray-400">0%</span>
-          </div>
-          <div class="text-5xl font-bold text-orange-500 mb-4" id="mi-count">0</div>
-          <div class="w-full bg-background rounded-full h-2 mb-4">
-            <div id="mi-bar" class="bg-orange-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
-          </div>
-          <button onclick="increment('mumbai-indians')" class="w-full py-3 bg-orange-500 hover:bg-orange-600 text-black font-semibold rounded-lg transition-colors">
-            + Mentioned
+        <div class="flex justify-center gap-2 mb-8">
+          <button
+            onclick="setTimeframe(null)"
+            data-timeframe="all"
+            class="timeframe-btn px-4 py-2 rounded-lg text-sm font-medium bg-orange-500 text-black"
+          >
+            All Time
+          </button>
+          <button
+            onclick="setTimeframe(60)"
+            data-timeframe="60"
+            class="timeframe-btn px-4 py-2 rounded-lg text-sm font-medium bg-card text-gray-300 border border-border hover:border-orange-500/50"
+          >
+            Last Hour
+          </button>
+          <button
+            onclick="setTimeframe(1440)"
+            data-timeframe="1440"
+            class="timeframe-btn px-4 py-2 rounded-lg text-sm font-medium bg-card text-gray-300 border border-border hover:border-orange-500/50"
+          >
+            24 Hours
+          </button>
+          <button
+            onclick="setTimeframe(10080)"
+            data-timeframe="10080"
+            class="timeframe-btn px-4 py-2 rounded-lg text-sm font-medium bg-card text-gray-300 border border-border hover:border-orange-500/50"
+          >
+            7 Days
           </button>
         </div>
 
-        <!-- Kanye West Card -->
-        <div class="bg-card border border-border rounded-xl p-6">
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-semibold text-white">Kanye West</h2>
-            <span id="kw-percentage" class="text-sm text-gray-400">0%</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div class="bg-card border border-border rounded-xl p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-lg font-semibold text-white">Mumbai Indians</h2>
+              <span id="mi-percentage" class="text-sm text-gray-400">0%</span>
+            </div>
+            <div class="text-5xl font-bold text-orange-500 mb-4" id="mi-count">0</div>
+            <div class="w-full bg-background rounded-full h-2 mb-4">
+              <div
+                id="mi-bar"
+                class="bg-orange-500 h-2 rounded-full transition-all duration-300"
+                style="width: 0%"
+              ></div>
+            </div>
+            <button
+              onclick="increment('mumbai-indians')"
+              class="w-full py-3 bg-orange-500 hover:bg-orange-600 text-black font-semibold rounded-lg transition-colors"
+            >
+              + Mentioned
+            </button>
           </div>
-          <div class="text-5xl font-bold text-orange-500 mb-4" id="kw-count">0</div>
-          <div class="w-full bg-background rounded-full h-2 mb-4">
-            <div id="kw-bar" class="bg-orange-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+
+          <div class="bg-card border border-border rounded-xl p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-lg font-semibold text-white">Kanye West</h2>
+              <span id="kw-percentage" class="text-sm text-gray-400">0%</span>
+            </div>
+            <div class="text-5xl font-bold text-orange-500 mb-4" id="kw-count">0</div>
+            <div class="w-full bg-background rounded-full h-2 mb-4">
+              <div
+                id="kw-bar"
+                class="bg-orange-500 h-2 rounded-full transition-all duration-300"
+                style="width: 0%"
+              ></div>
+            </div>
+            <button
+              onclick="increment('kanye-west')"
+              class="w-full py-3 bg-orange-500 hover:bg-orange-600 text-black font-semibold rounded-lg transition-colors"
+            >
+              + Mentioned
+            </button>
           </div>
-          <button onclick="increment('kanye-west')" class="w-full py-3 bg-orange-500 hover:bg-orange-600 text-black font-semibold rounded-lg transition-colors">
-            + Mentioned
+        </div>
+
+        <div class="text-center">
+          <button
+            onclick="resetCounts()"
+            class="px-6 py-2 border border-border text-gray-400 hover:text-white hover:border-gray-500 rounded-lg transition-colors"
+          >
+            Reset All
           </button>
         </div>
-      </div>
-
-      <!-- Reset Button -->
-      <div class="text-center">
-        <button onclick="resetCounts()" class="px-6 py-2 border border-border text-gray-400 hover:text-white hover:border-gray-500 rounded-lg transition-colors">
-          Reset All
-        </button>
       </div>
     </div>
-  </div>
 
-  <script>
-    let currentTimeframe = null;
+    <script>
+      let currentTimeframe = null;
 
-    function updateUI(counts) {
-      const mi = counts['mumbai-indians'] || 0;
-      const kw = counts['kanye-west'] || 0;
-      const total = mi + kw;
+      function updateUI(counts) {
+        const mi = counts["mumbai-indians"] || 0;
+        const kw = counts["kanye-west"] || 0;
+        const total = mi + kw;
 
-      const miPercent = total > 0 ? Math.round((mi / total) * 100) : 0;
-      const kwPercent = total > 0 ? Math.round((kw / total) * 100) : 0;
+        const miPercent = total > 0 ? Math.round((mi / total) * 100) : 0;
+        const kwPercent = total > 0 ? Math.round((kw / total) * 100) : 0;
 
-      document.getElementById('mi-count').textContent = mi;
-      document.getElementById('kw-count').textContent = kw;
-      document.getElementById('mi-percentage').textContent = miPercent + '%';
-      document.getElementById('kw-percentage').textContent = kwPercent + '%';
-      document.getElementById('mi-bar').style.width = miPercent + '%';
-      document.getElementById('kw-bar').style.width = kwPercent + '%';
-    }
+        document.getElementById("mi-count").textContent = mi;
+        document.getElementById("kw-count").textContent = kw;
+        document.getElementById("mi-percentage").textContent = miPercent + "%";
+        document.getElementById("kw-percentage").textContent = kwPercent + "%";
+        document.getElementById("mi-bar").style.width = miPercent + "%";
+        document.getElementById("kw-bar").style.width = kwPercent + "%";
+      }
 
-    async function fetchCounts() {
-      const url = currentTimeframe 
-        ? `/api/counts?timeframe=${currentTimeframe}` 
-        : '/api/counts';
-      const res = await fetch(url);
-      const counts = await res.json();
-      updateUI(counts);
-    }
-
-    async function increment(category) {
-      const res = await fetch('/api/increment', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ category })
-      });
-      const counts = await res.json();
-      updateUI(counts);
-    }
-
-    async function resetCounts() {
-      if (confirm('Reset all counts?')) {
-        const res = await fetch('/api/reset', { method: 'POST' });
+      async function fetchCounts() {
+        const url = currentTimeframe ? `/api/counts?timeframe=${currentTimeframe}` : "/api/counts";
+        const res = await fetch(url);
         const counts = await res.json();
         updateUI(counts);
       }
-    }
 
-    function setTimeframe(minutes) {
-      currentTimeframe = minutes;
-      
-      // Update button styles
-      document.querySelectorAll('.timeframe-btn').forEach(btn => {
-        const btnTimeframe = btn.dataset.timeframe;
-        const isActive = (minutes === null && btnTimeframe === 'all') || 
-                         (minutes !== null && btnTimeframe === String(minutes));
-        
-        if (isActive) {
-          btn.className = 'timeframe-btn px-4 py-2 rounded-lg text-sm font-medium bg-orange-500 text-black';
-        } else {
-          btn.className = 'timeframe-btn px-4 py-2 rounded-lg text-sm font-medium bg-card text-gray-300 border border-border hover:border-orange-500/50';
+      async function increment(category) {
+        const res = await fetch("/api/increment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ category }),
+        });
+        const counts = await res.json();
+        updateUI(counts);
+      }
+
+      async function resetCounts() {
+        if (confirm("Reset all counts?")) {
+          const res = await fetch("/api/reset", { method: "POST" });
+          const counts = await res.json();
+          updateUI(counts);
         }
-      });
-      
-      fetchCounts();
-    }
+      }
 
-    // Initial fetch
-    fetchCounts();
-  </script>
-</body>
+      function setTimeframe(minutes) {
+        currentTimeframe = minutes;
+
+        // Update button styles
+        document.querySelectorAll(".timeframe-btn").forEach((btn) => {
+          const btnTimeframe = btn.dataset.timeframe;
+          const isActive =
+            (minutes === null && btnTimeframe === "all") ||
+            (minutes !== null && btnTimeframe === String(minutes));
+
+          if (isActive) {
+            btn.className =
+              "timeframe-btn px-4 py-2 rounded-lg text-sm font-medium bg-orange-500 text-black";
+          } else {
+            btn.className =
+              "timeframe-btn px-4 py-2 rounded-lg text-sm font-medium bg-card text-gray-300 border border-border hover:border-orange-500/50";
+          }
+        });
+
+        fetchCounts();
+      }
+
+      // Initial fetch
+      fetchCounts();
+    </script>
+  </body>
 </html>

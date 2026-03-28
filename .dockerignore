@@ -1,0 +1,13 @@
+.dockerignore
+Dockerfile*
+docker-compose*
+.git
+.gitignore
+.DS_Store
+node_modules
+*.tsbuildinfo
+counter.db
+db
+data
+npm-debug.log*
+bun-debug.log*

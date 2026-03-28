@@ -1,12 +1,11 @@
 {
-  "name": "mention-counter",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "bun run server.ts",
-    "start": "bun run server.ts"
-  },
-  "devDependencies": {
-    "@types/bun": "latest"
-  }
+    "name": "counter",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "start": "bun run server.ts"
+    },
+    "devDependencies": {
+        "@types/bun": "latest"
+    }
 }
